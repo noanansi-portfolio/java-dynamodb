@@ -1,6 +1,8 @@
 package com.noanansi.javadynamodb;
 
 import java.net.URI;
+import java.util.Map;
+import java.util.UUID;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
@@ -22,5 +24,14 @@ public class MovieRepository {
 
   private final DynamoDbTable<Movie> moviesTable =
       dynamoDbEnhancedClient.table("movies", TableSchema.fromBean(Movie.class));
+
+  public Movie create(final String title, final Integer year, final Map<String, Object> info) {
+    final var movie = new Movie();
+    movie.setId(UUID.randomUUID().toString());
+    movie.setTitle(title);
+    movie.setYear(year);
+    movie.setInfo(info);
+    return movie;
+  }
 
 }
