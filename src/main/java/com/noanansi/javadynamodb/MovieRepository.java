@@ -31,6 +31,7 @@ public class MovieRepository {
     movie.setTitle(title);
     movie.setYear(year);
     movie.setInfo(info);
+    moviesTable.putItem(movie);
     return movie;
   }
 
