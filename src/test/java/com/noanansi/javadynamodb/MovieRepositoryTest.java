@@ -35,4 +35,14 @@ class MovieRepositoryTest {
     Assertions.assertEquals(year, createdMovie.getYear());
   }
 
+  @Test
+  void givenExistingTitle_whenFindingByTitle_thenRecordFound() {
+    final var title = "The Fellowship of the Ring";
+    final var repository = new MovieRepository();
+    final var queryResult = repository.findByTitle(title);
+    Assertions.assertFalse(queryResult.isEmpty());
+    Assertions.assertEquals(title, queryResult.get(0).getTitle());
+    Assertions.assertEquals(2001, queryResult.get(0).getYear());
+  }
+
 }
