@@ -52,4 +52,8 @@ public class MovieRepository {
         .collect(Collectors.toList());
   }
 
+  public Movie update(final Movie movie) {
+    return moviesTable.updateItem(movie);
+  }
+
 }

@@ -45,4 +45,15 @@ class MovieRepositoryTest {
     Assertions.assertEquals(2001, queryResult.get(0).getYear());
   }
 
+  @Test
+  void givenExistingMovie_whenUpdating_thenRecordChanged() {
+    final var title = "The Fellowship of the Ring";
+    final var repository = new MovieRepository();
+    final var queryResult = repository.findByTitle(title);
+    final var movie = queryResult.get(0);
+    movie.setYear(2000);
+    final var updatedMovie = repository.update(movie);
+    Assertions.assertEquals(2000, updatedMovie.getYear());
+  }
+
 }
