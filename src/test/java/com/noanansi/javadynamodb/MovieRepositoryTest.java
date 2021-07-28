@@ -56,4 +56,13 @@ class MovieRepositoryTest {
     Assertions.assertEquals(2000, updatedMovie.getYear());
   }
 
+  @Test
+  void givenExistingMovieId_whenFinding_thenRecordReturned() {
+    final var id = "033f2496-d906-4691-b39a-6ecd229de365";
+    final var repository = new MovieRepository();
+    final var result = repository.findById(id);
+    Assertions.assertTrue(result.isPresent());
+    Assertions.assertEquals(id, result.get().getId());
+  }
+
 }

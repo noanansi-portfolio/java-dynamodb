@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
@@ -54,6 +55,11 @@ public class MovieRepository {
 
   public Movie update(final Movie movie) {
     return moviesTable.updateItem(movie);
+  }
+
+  public Optional<Movie> findById(final String id) {
+    final var movie = moviesTable.getItem(builder -> builder.key(key -> key.partitionValue(id)));
+    return Optional.ofNullable(movie);
   }
 
 }
