@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
+import software.amazon.awssdk.enhanced.dynamodb.Key;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
 import software.amazon.awssdk.enhanced.dynamodb.model.QueryConditional;
 import software.amazon.awssdk.regions.Region;
@@ -42,6 +43,11 @@ public class MovieRepository {
     return movie;
   }
 
+  public Optional<Movie> findById(final String id) {
+    final var movie = moviesTable.getItem(builder -> builder.key(key -> key.partitionValue(id)));
+    return Optional.ofNullable(movie);
+  }
+
   public List<Movie> findByTitle(final String title) {
     final var titleIndex = moviesTable.index(TITLE_INDEX);
     final var condition =
@@ -57,9 +63,10 @@ public class MovieRepository {
     return moviesTable.updateItem(movie);
   }
 
-  public Optional<Movie> findById(final String id) {
-    final var movie = moviesTable.getItem(builder -> builder.key(key -> key.partitionValue(id)));
-    return Optional.ofNullable(movie);
+  public Optional<Movie> delete(final String id) {
+    return Optional.ofNullable(
+        moviesTable.deleteItem
+            (Key.builder().partitionValue(id).build()));
   }
 
 }

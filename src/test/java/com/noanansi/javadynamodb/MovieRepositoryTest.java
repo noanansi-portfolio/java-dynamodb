@@ -65,4 +65,13 @@ class MovieRepositoryTest {
     Assertions.assertEquals(id, result.get().getId());
   }
 
+  @Test
+  void givenExistingMovieId_whenDeleting_thenRecordExcluded() {
+    final var id = "033f2496-d906-4691-b39a-6ecd229de365";
+    final var repository = new MovieRepository();
+    final var result = repository.delete(id);
+    Assertions.assertTrue(result.isPresent());
+    Assertions.assertEquals(id, result.get().getId());
+  }
+
 }
